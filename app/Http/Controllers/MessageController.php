@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Commission;
 use App\Services\MessageService;
+
 class MessageController extends Controller
 {
     protected $messageService;
@@ -15,7 +17,16 @@ class MessageController extends Controller
 
     public function send(Request $request)
     {
-        $this->messageService->send($request->all(), authUser());
+        $commission = Commission::findOrFail($request->commission_id);
+        
+        $receiverId = ($commission->client_id === auth()->id()) 
+            ? $commission->artist_id 
+            : $commission->client_id;
+
+        $data = $request->all();
+        $data['receiver_id'] = $receiverId;
+
+        $this->messageService->send($data, auth()->user());
 
         return back();
     }

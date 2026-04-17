@@ -18,41 +18,42 @@ class MilestoneController extends Controller
 
     public function store(Request $request)
     {
-        // Only artist can create milestone
-        if (authUser()->role !== 'artist') {
-            return "Only artists can create milestones";
+        if (auth()->user()->role !== 'artist') {
+            return back()->with('error', 'Only artists can create milestones');
         }
 
-        $this->milestoneService->create($request->all());
+        $data = $request->all();
+        
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('milestones', 'public');
+            $data['file'] = '/storage/' . $path;
+        }
 
-        return back();
+        $this->milestoneService->create($data);
+        return back()->with('success', 'Milestone uploaded successfully!');
     }
 
     public function approve($id)
     {
-        // Only client can approve
-        if (authUser()->role !== 'client') {
-            return "Only clients can approve";
+        if (auth()->user()->role !== 'client') {
+            return back()->with('error', 'Only clients can approve milestones');
         }
 
         $milestone = Milestone::find($id);
 
         $this->milestoneService->approve($milestone);
-
-        return back();
+        return back()->with('success', 'Milestone approved!');
     }
 
     public function reject($id)
     {
-        // Only client can reject
-        if (authUser()->role !== 'client') {
-            return "Only clients can reject";
+        if (auth()->user()->role !== 'client') {
+            return back()->with('error', 'Only clients can reject milestones');
         }
 
         $milestone = Milestone::find($id);
 
         $this->milestoneService->reject($milestone);
-
-        return back();
+        return back()->with('error', 'Milestone rejected - please provide feedback in chat.');
     }
 }

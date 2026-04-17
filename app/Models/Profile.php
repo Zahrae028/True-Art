@@ -9,7 +9,12 @@ class Profile extends Model
    protected $fillable = [
         'user_id',
         'bio',
-        'protfolio',
+        'specialty',
+        'projects_completed',
+        'rating',
+        'response_rate',
+        'portfolio',
+        'avatar',
     ];
  
 }

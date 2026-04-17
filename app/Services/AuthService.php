@@ -9,19 +9,22 @@ class AuthService
     public function register($data)
     {
         return User::create([
+            'name' => $data['name'] ?? 'Guest User',
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
-            'role' => $data['role'],
+            'role' => $data['role'] ?? 'client',
         ]);
     }
 
     public function login($data)
     {
-        $user = User::where('email', $data['email'])->first();
+        $credentials = [
+            'email' => $data['email'],
+            'password' => $data['password']
+        ];
 
-        if ($user && password_verify($data['password'], $user->password)) {
-            session(['user_id' => $user->id]);
-            return $user;
+        if (\Illuminate\Support\Facades\Auth::attempt($credentials)) {
+            return \Illuminate\Support\Facades\Auth::user();
         }
 
         return null;

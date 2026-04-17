@@ -12,6 +12,7 @@ class MilestoneService
             'commission_id' => $data['commission_id'],
             'title' => $data['title'],
             'status' => 'pending',
+            'file' => $data['file'] ?? null,
         ]);
     }
 

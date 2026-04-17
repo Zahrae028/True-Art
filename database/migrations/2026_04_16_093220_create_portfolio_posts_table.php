@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('milestones', function (Blueprint $table) {
+        Schema::create('portfolio_posts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('commission_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('title');
-            $table->string('status')->default('pending');
-            $table->string('file')->nullable();
+            $table->text('description')->nullable();
+            $table->string('image_path');
+            $table->decimal('estimated_price', 10, 2)->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('milestones');
+        Schema::dropIfExists('portfolio_posts');
     }
 };

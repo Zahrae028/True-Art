@@ -11,6 +11,7 @@ class Commission extends Model
         'artist_id',
         'title',
         'description',
+        'price',
         'status',
     ];
 
@@ -22,7 +23,7 @@ class Commission extends Model
         return $this->belongsTo(User::class , 'artist_id');
     }
 
-    public function milestone(){
+    public function milestones(){
         return $this->hasMany(Milestone::class);
     }
 

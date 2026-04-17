@@ -22,6 +22,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'is_banned',
     ];
 
     /**
@@ -56,7 +57,11 @@ class User extends Authenticatable
     }
 
     public function commissionsAsArtist(){
-        return $this->hasMany(Commission::class , 'artist');
+        return $this->hasMany(Commission::class, 'artist_id');
+    }
+
+    public function portfolioPosts(){
+        return $this->hasMany(PortfolioPost::class, 'user_id');
     }
 
 }

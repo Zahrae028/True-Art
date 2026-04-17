@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Milestone extends Model
 {
     protected $fillable = [
-        'comission',
+        'commission_id',
         'title',
         'status',
         'file',

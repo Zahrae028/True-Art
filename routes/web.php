@@ -36,17 +36,17 @@ Route::get('/artist/{id}', function ($id) {
     return view('artist-profile', compact('artist'));
 });
 
-// Authentication Routes
+
 Route::get('/register', fn() => view('register'));
 Route::post('/register', [AuthController::class, 'register']);
 Route::get('/login', fn() => view('login'))->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);
 
-// Protected Routes
+
 Route::middleware(['auth'])->group(function () {
     
-    // Dashboards
+    
     Route::get('/dashboard', function () {
         $commissions = Commission::where('client_id', auth()->id())->get();
         return view('dashboard', compact('commissions'));
@@ -57,23 +57,23 @@ Route::middleware(['auth'])->group(function () {
         return view('dashboard-artist', compact('commissions'));
     });
 
-    // Messages
+    
     Route::get('/messages', function (Illuminate\Http\Request $request) {
         $user = auth()->user();
         
-        // Fetch all commissions this user is part of (as client or artist)
+        
         $commissions = Commission::where('client_id', $user->id)
             ->orWhere('artist_id', $user->id)
             ->with(['client', 'artist'])
             ->get();
 
-        // Determine the active commission (requested by ID or default to the most recent)
+            
         $activeId = $request->query('id');
         $activeCommission = $activeId 
             ? $commissions->where('id', $activeId)->first() 
-            : $commissions->sortByDesc('updated_at')->first();
+            : null;
 
-        // Fetch messages for the active commission
+            
         $messages = $activeCommission 
             ? Message::where('commission_id', $activeCommission->id)->with('sender')->orderBy('created_at')->get() 
             : collect();
@@ -87,7 +87,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/messages/artist', fn() => redirect('/messages'));
 
-    // Commission Management
+    
     Route::get('/commissions/manage', function () {
         $commissions = Commission::where('artist_id', auth()->id())->get();
         return view('commissions-manage', compact('commissions'));
@@ -116,7 +116,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/profile/update', [ProfileController::class, 'update']);
 
-    // Admin Suite
+    
     Route::prefix('admin')->group(function () {
         Route::get('/dashboard', [AdminController::class, 'index']);
         Route::get('/users', [AdminController::class, 'users']);
@@ -125,7 +125,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/user/{id}/promote-admin', [AdminController::class, 'promoteAdmin']);
     });
 
-    // Portfolio Management (Artists Only)
+    
     Route::prefix('portfolio')->group(function () {
         Route::get('/create', [PortfolioController::class, 'create']);
         Route::post('/', [PortfolioController::class, 'store']);
@@ -137,7 +137,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/commission/{id}/accept', [CommissionController::class, 'accept']);
     Route::post('/commission/{id}/approve-quote', [CommissionController::class, 'approveQuote']);
     Route::post('/commission/{id}/decline-quote', [CommissionController::class, 'declineQuote']);
-    Route::post('/commission/{id}/pay', [CommissionController::class, 'pay']);
+    Route::post('/commission/{id}/pay-deposit', [CommissionController::class, 'payDeposit']);
+    Route::post('/commission/{id}/refund-deposit', [CommissionController::class, 'refundDeposit']);
+    Route::post('/commission/{id}/pay-final', [CommissionController::class, 'payFinal']);
     Route::post('/commission/{id}/complete', [CommissionController::class, 'complete']);
 
     // Milestone Actions

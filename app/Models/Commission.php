@@ -13,7 +13,33 @@ class Commission extends Model
         'description',
         'price',
         'status',
+        'deposit_paid_at',
+        'paid_amount',
     ];
+
+    protected $casts = [
+        'deposit_paid_at' => 'datetime',
+    ];
+
+    public function getDepositAmount()
+    {
+        return $this->price * 0.20; // 20% deposit
+    }
+
+    public function getRemainingAmount()
+    {
+        return $this->price - $this->paid_amount;
+    }
+
+    public function isRefundable()
+    {
+        if (!$this->deposit_paid_at) {
+            return false;
+        }
+        
+        // Refundable within 48 hours of deposit payment
+        return $this->deposit_paid_at->diffInHours(now()) <= 48;
+    }
 
     public function client(){
         return $this->belongsTo(User::class , 'client_id');

@@ -1,27 +1,35 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="dashboard-section" style="max-width: 400px; margin: 2rem auto;">
-    <div class="dashboard-title">Register</div>
-    <form action="/register" method="POST" class="commission-form">
+<div class="dashboard-section mx-auto mt-lg max-w-sm">
+    <div class="dashboard-title text-center">Register</div>
+    <form action="/register" method="POST" class="commission-form p-0 border-none b-transparent">
         @csrf
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
+        <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" placeholder="John Doe" required>
+        </div>
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="you@example.com" required>
+        </div>
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="••••••••" required>
+        </div>
 
-        <label for="role">Role:</label>
-        <select id="role" name="role" required>
-            <option value="client">Client</option>
-            <option value="artist">Artist</option>
-        </select>
+        <div class="form-group">
+            <label for="role">I am a...</label>
+            <select id="role" name="role" required>
+                <option value="client">Client (Collector)</option>
+                <option value="artist">Artist (Creator)</option>
+            </select>
+        </div>
 
-        <button type="submit" class="btn btn-primary">Register</button>
+        <button type="submit" class="btn btn-primary w-full py-2">Create Account</button>
     </form>
-    <p style="margin-top: 1rem; text-align: center;">Already have an account? <a href="/login" class="navbar-link">Login</a></p>
+    <p class="text-center mt-2 text-sm text-dim">Already have an account? <a href="/login" class="text-primary">Login</a></p>
 </div>
 @endsection

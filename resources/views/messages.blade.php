@@ -3,7 +3,7 @@
 @section('title', 'Inbox')
 
 @section('content')
-<div class="inbox-wrapper">
+<div class="inbox-wrapper {{ isset($activeCommission) ? 'chat-open' : '' }}">
     
     <!-- Sidebar: Conversation List -->
     <div class="inbox-sidebar">
@@ -28,8 +28,8 @@
                     </a>
                 @endforeach
             @else
-                <div style="padding: 3rem 1.5rem; text-align: center; color: var(--text-dim); font-size: 0.9rem;">
-                    <div style="margin-bottom: 1rem; opacity: 0.2;">
+                <div class="p-4 text-center text-dim text-sm">
+                    <div class="mb-2 opacity-20">
                         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
                     </div>
                     No conversations yet.
@@ -47,21 +47,24 @@
             <!-- Chat Header -->
             <div class="chat-thread-header">
                 <div class="chat-thread-user">
+                    <a href="/messages" class="text-dim me-2 d-none d-block-tablet">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-top: 4px;"><polyline points="15 18 9 12 15 6"/></svg>
+                    </a>
                     <img src="{{ $activeOtherUser->profile->avatar ?? 'https://i.pravatar.cc/150?u=' . $activeOtherUser->email }}" 
-                         style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary);" alt="">
+                         class="rounded-full w-40 h-40 object-cover border-primary" alt="">
                     <div>
-                        <div style="font-weight: 700; color: var(--text-main); font-size: 1.05rem; letter-spacing: -0.01em;">{{ $activeOtherUser->name }}</div>
-                        <div style="font-size: 0.75rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.5rem;">
-                            <span style="width: 6px; height: 6px; background: #22c55e; border-radius: 50%;"></span> Online
+                        <div class="fw-bold text-main ls-tight">{{ $activeOtherUser->name }}</div>
+                        <div class="text-xs text-muted d-flex items-center gap-1">
+                            <span class="rounded-full bg-success" style="width: 6px; height: 6px;"></span> Active Now
                         </div>
                     </div>
                 </div>
                 
-                <div style="text-align: right;">
-                    <div style="font-family: var(--font-heading); font-size: 0.85rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.05em;">
+                <div class="text-right">
+                    <div class="font-heading text-sm fw-bold text-primary text-uppercase ls-wide">
                         {{ $activeCommission->title }}
                     </div>
-                    <a href="/commission/{{ $activeCommission->id }}" style="font-size: 0.75rem; color: var(--text-dim); text-decoration: none; border-bottom: 1px dashed var(--text-dim);">View Project Details</a>
+                    <a href="/commission/{{ $activeCommission->id }}" class="text-xs text-dim border-dashed-dim">View Project Details</a>
                 </div>
             </div>
 
@@ -79,31 +82,35 @@
                         </div>
                     @endforeach
                 @else
-                    <div style="margin: auto; text-align: center; color: var(--text-dim); max-width: 300px;">
-                        <div style="font-size: 1.25rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.5rem;">New Conversation</div>
-                        <p style="font-size: 0.9rem;">Start your collaboration on <strong>{{ $activeCommission->title }}</strong> by sending a message below.</p>
+                    <div class="mx-auto text-center text-dim max-w-xs">
+                        <div class="text-lg fw-bold text-main mb-1">New Conversation</div>
+                        <p class="text-sm">Start your collaboration on <strong>{{ $activeCommission->title }}</strong> by sending a message below.</p>
                     </div>
                 @endif
             </div>
 
             <!-- Message Input -->
             <div class="chat-input-wrapper">
-                <form action="/message" method="POST" style="display: flex; gap: 1rem; align-items: center;">
+                <form action="/message" method="POST" class="d-flex gap-2 items-center">
                     @csrf
                     <input type="hidden" name="commission_id" value="{{ $activeCommission->id }}">
                     <input type="text" name="content" class="chat-input-field" placeholder="Write a message to {{ $activeOtherUser->name }}..." required>
-                    <button type="submit" class="btn btn-primary" style="height: 48px; width: 48px; border-radius: 50%; padding: 0; flex-shrink: 0;">
+                    <button type="submit" class="btn btn-primary rounded-full p-0 flex-shrink-0 d-flex items-center justify-center" style="height: 48px; width: 48px;">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
                     </button>
                 </form>
             </div>
         @else
-            <div style="margin: auto; text-align: center; padding: 3rem;">
-                <div style="width: 120px; height: 120px; background: rgba(139, 92, 246, 0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; border: 1px solid rgba(139, 92, 246, 0.1);">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <div class="d-flex flex-column items-center justify-center h-full p-4 text-center">
+                <div class="bg-primary-tiny rounded-full d-flex items-center justify-center mx-auto mb-4 border-tiny shadow-purple" style="width: 140px; height: 140px;">
+                    <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                 </div>
-                <h3 style="font-family: var(--font-heading); color: var(--text-main); font-size: 1.75rem; margin-bottom: 0.75rem;">Your Creative Hub</h3>
-                <p style="max-width: 400px; margin: 0 auto; color: var(--text-muted); line-height: 1.6;">Select a project from the sidebar to manage your communications, share feedback, and finalize your art commissions.</p>
+                <h3 class="font-heading text-main text-3xl mb-1 ls-tight">Communicate Mastery</h3>
+                <p class="mx-auto text-dim max-w-sm lh-relaxed">Select a project from your inbox to begin discussing milestones, sharing assets, and finalizing your digital commissions.</p>
+                <div class="mt-4 p-2 px-3 border-tiny rounded-sm text-xs text-primary-dim bg-primary-tiny">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    Ready for Collaboration
+                </div>
             </div>
         @endif
     </div>

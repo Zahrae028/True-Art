@@ -3,52 +3,45 @@
 @section('title', 'Monitor Commissions')
 
 @section('content')
-<div class="hero-section" style="padding: 2rem 0; text-align: left;">
-    <h1 class="hero-title" style="font-size: 2.5rem; margin-bottom: 0.5rem;">Project <span>Oversight</span></h1>
-    <p class="hero-description" style="margin: 0; font-size: 1rem;">Monitoring all active and completed art commissions across the platform.</p>
+<div class="hero-section text-left py-2">
+    <h1 class="hero-title text-3xl mb-1">Project <span>Oversight</span></h1>
+    <p class="hero-description m-0 text-base">Monitoring all active and completed art commissions across the platform.</p>
 </div>
 
-<div class="dashboard-section" style="padding: 0; overflow: hidden;">
-    <table style="width: 100%; border-collapse: collapse; text-align: left;">
+<div class="dashboard-section p-0 overflow-hidden">
+    <table class="w-full text-left collapse">
         <thead>
-            <tr style="background: rgba(255,255,255,0.02); border-bottom: 1px solid var(--border);">
-                <th style="padding: 1.25rem 2rem; font-family: var(--font-heading); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim);">Project Title</th>
-                <th style="padding: 1.25rem 2rem; font-family: var(--font-heading); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim);">Collaborators</th>
-                <th style="padding: 1.25rem 2rem; font-family: var(--font-heading); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim);">Current Status</th>
-                <th style="padding: 1.25rem 2rem; font-family: var(--font-heading); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim);">Actions</th>
+            <tr class="border-bottom bg-tiny">
+                <th class="p-3 font-heading text-xs text-uppercase ls-wide text-dim">Project Title</th>
+                <th class="p-3 font-heading text-xs text-uppercase ls-wide text-dim">Collaborators</th>
+                <th class="p-3 font-heading text-xs text-uppercase ls-wide text-dim">Current Status</th>
+                <th class="p-3 font-heading text-xs text-uppercase ls-wide text-dim">Actions</th>
             </tr>
         </thead>
         <tbody>
             @foreach($commissions as $commission)
-            <tr style="border-bottom: 1px solid rgba(255,255,255,0.03); transition: var(--transition);" onmouseover="this.style.background='rgba(255,255,255,0.01)'" onmouseout="this.style.background='transparent'">
-                <td style="padding: 1.25rem 2rem;">
-                    <div style="font-weight: 700; color: var(--text-main); font-size: 1rem;">{{ $commission->title }}</div>
-                    <div style="font-size: 0.75rem; color: var(--text-dim); margin-top: 0.25rem;">Initiated {{ $commission->created_at->diffForHumans() }}</div>
+            <tr class="transition-all border-tiny border-none hover-bg-tiny" style="border-left: none; border-right: none; border-top: none;">
+                <td class="p-3">
+                    <div class="fw-bold text-main text-base">{{ $commission->title }}</div>
+                    <div class="text-xs text-dim mt-1">Initiated {{ $commission->created_at->diffForHumans() }}</div>
                 </td>
-                <td style="padding: 1.25rem 2rem;">
-                    <div style="font-size: 0.9rem; color: var(--text-muted);">
-                        <span style="color: var(--text-main); font-weight: 600;">{{ $commission->client->name }}</span>
-                        <span style="opacity: 0.4; margin: 0 0.25rem;">&rarr;</span>
-                        <span style="color: var(--primary); font-weight: 600;">{{ $commission->artist->name }}</span>
+                <td class="p-3">
+                    <div class="text-sm text-muted">
+                        <span class="text-main fw-semibold">{{ $commission->client->name }}</span>
+                        <span class="mx-1 opacity-40">&rarr;</span>
+                        <span class="text-primary fw-semibold">{{ $commission->artist->name }}</span>
                     </div>
                 </td>
-                <td style="padding: 1.25rem 2rem;">
-                    <span style="display: inline-block; padding: 0.25rem 0.75rem; border-radius: var(--radius-sm); font-size: 0.7rem; font-weight: 800; text-transform: uppercase; 
-                        background: {{ 
-                            $commission->status === 'completed' ? 'rgba(34, 197, 94, 0.15)' : 
-                            ($commission->status === 'paid' ? 'rgba(59, 130, 246, 0.15)' : 
-                            ($commission->status === 'pending' ? 'rgba(234, 179, 8, 0.15)' : 'rgba(139, 92, 246, 0.15)')) 
-                        }};
-                        color: {{ 
-                            $commission->status === 'completed' ? '#4ade80' : 
-                            ($commission->status === 'paid' ? '#3b82f6' : 
-                            ($commission->status === 'pending' ? '#eab308' : 'var(--primary)')) 
-                        }};">
+                <td class="p-3">
+                    <span class="d-inline p-1 rounded-sm text-xs fw-extrabold text-uppercase 
+                        {{ $commission->status === 'completed' ? 'bg-success-tiny text-success-bright' : 
+                          ($commission->status === 'paid' ? 'bg-info-tiny text-info' : 
+                          ($commission->status === 'pending' ? 'bg-warning-tiny text-warning' : 'bg-primary-tiny text-primary')) }}">
                         {{ $commission->status }}
                     </span>
                 </td>
-                <td style="padding: 1.25rem 2rem;">
-                    <a href="/commission/{{ $commission->id }}" class="btn btn-secondary" style="padding: 0.4rem 0.75rem; font-size: 0.75rem;">View Project</a>
+                <td class="p-3">
+                    <a href="/commission/{{ $commission->id }}" class="btn btn-secondary py-1 px-2 text-xs">View Project</a>
                 </td>
             </tr>
             @endforeach

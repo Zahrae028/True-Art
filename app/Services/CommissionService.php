@@ -44,19 +44,49 @@ class CommissionService
         $commission->save();
     }
 
-    public function pay($commission)
+    public function payDeposit($commission)
     {
         if ($commission->status !== 'accepted') {
-            return "Cannot pay yet. Ensure the commission has been accepted by the artist.";
+            return "Commission must be accepted before paying the deposit.";
+        }
+
+        $commission->status = 'deposit_paid';
+        $commission->paid_amount = $commission->getDepositAmount();
+        $commission->deposit_paid_at = now();
+        $commission->save();
+    }
+
+    public function refundDeposit($commission)
+    {
+        if ($commission->status !== 'deposit_paid') {
+            return "No deposit to refund at this stage.";
+        }
+
+        if (!$commission->isRefundable()) {
+            return "The 48-hour refund window has expired.";
+        }
+
+        $commission->status = 'cancelled';
+        $commission->paid_amount = 0;
+        $commission->deposit_paid_at = null;
+        $commission->save();
+    }
+
+    public function payFinal($commission)
+    {
+        if ($commission->status !== 'deposit_paid') {
+            return "Deposit must be paid before final payment.";
         }
 
         $commission->status = 'paid';
+        $commission->paid_amount = $commission->price;
         $commission->save();
     }
+
     public function complete($commission)
     {
         if ($commission->status !== 'paid') {
-            return "Not paid yet";
+            return "Final payment must be received before marking as complete.";
         }
 
         $commission->status = 'completed';

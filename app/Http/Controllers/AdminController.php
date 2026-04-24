@@ -8,9 +8,7 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    /**
-     * Admin Dashboard with platform statistics.
-     */
+  
     public function index()
     {
         if (auth()->user()->role !== 'admin') {
@@ -32,9 +30,7 @@ class AdminController extends Controller
         return view('admin.dashboard', compact('stats', 'recentUsers', 'recentCommissions'));
     }
 
-    /**
-     * Manage all users on the platform.
-     */
+    
     public function users()
     {
         if (auth()->user()->role !== 'admin') {
@@ -44,9 +40,7 @@ class AdminController extends Controller
         return view('admin.users', compact('users'));
     }
 
-    /**
-     * Monitor all commissions across the site.
-     */
+   
     public function commissions()
     {
         if (auth()->user()->role !== 'admin') {
@@ -56,9 +50,6 @@ class AdminController extends Controller
         return view('admin.commissions', compact('commissions'));
     }
 
-    /**
-     * Toggle the ban status of a user.
-     */
     public function toggleBan($id)
     {
         if (auth()->user()->role !== 'admin') {
@@ -78,9 +69,7 @@ class AdminController extends Controller
         return back()->with('success', "User '{$user->name}' has been {$status} successfully.");
     }
 
-    /**
-     * Promote a user to Admin role.
-     */
+    
     public function promoteAdmin($id)
     {
         if (auth()->user()->role !== 'admin') {

@@ -73,7 +73,7 @@ class CommissionController extends Controller
         return back()->with('success', 'Commission declined and cancelled.');
     }
 
-    public function pay($id)
+    public function payDeposit($id)
     {
         $commission = Commission::findOrFail($id);
 
@@ -81,13 +81,47 @@ class CommissionController extends Controller
             return back()->with('error', 'Unauthorized. Only the client can make payments.');
         }
 
-        $result = $this->commissionService->pay($commission);
+        $result = $this->commissionService->payDeposit($commission);
         
         if (is_string($result)) {
             return back()->with('error', $result);
         }
 
-        return back()->with('success', 'Payment successful! The artist can now proceed with the work.');
+        return back()->with('success', 'Deposit paid successfully! The artist will now begin work.');
+    }
+
+    public function refundDeposit($id)
+    {
+        $commission = Commission::findOrFail($id);
+
+        if (Auth::id() !== $commission->client_id) {
+            return back()->with('error', 'Unauthorized. Only the client can request a refund.');
+        }
+
+        $result = $this->commissionService->refundDeposit($commission);
+        
+        if (is_string($result)) {
+            return back()->with('error', $result);
+        }
+
+        return back()->with('success', 'Deposit refunded successfully. The commission has been cancelled.');
+    }
+
+    public function payFinal($id)
+    {
+        $commission = Commission::findOrFail($id);
+
+        if (Auth::id() !== $commission->client_id) {
+            return back()->with('error', 'Unauthorized. Only the client can make payments.');
+        }
+
+        $result = $this->commissionService->payFinal($commission);
+        
+        if (is_string($result)) {
+            return back()->with('error', $result);
+        }
+
+        return back()->with('success', 'Final payment successful! The artist can now deliver the final assets.');
     }
 
     public function complete($id)

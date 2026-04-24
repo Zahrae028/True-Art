@@ -31,7 +31,6 @@ class AuthController extends Controller
                 return redirect('/login')->with('error', 'Your account has been suspended. Please contact support.');
             }
 
-            // Redirect based on role
             if ($user->role === 'artist') {
                 return redirect('/dashboard/artist');
             }

@@ -23,7 +23,7 @@ class Commission extends Model
 
     public function getDepositAmount()
     {
-        return $this->price * 0.20; // 20% deposit
+        return $this->price * 0.20; 
     }
 
     public function getRemainingAmount()
@@ -37,7 +37,6 @@ class Commission extends Model
             return false;
         }
         
-        // Refundable within 48 hours of deposit payment
         return $this->deposit_paid_at->diffInHours(now()) <= 48;
     }
 

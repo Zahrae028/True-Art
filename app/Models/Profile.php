@@ -10,9 +10,6 @@ class Profile extends Model
         'user_id',
         'bio',
         'specialty',
-        'projects_completed',
-        'rating',
-        'response_rate',
         'portfolio',
         'avatar',
     ];

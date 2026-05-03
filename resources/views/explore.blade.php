@@ -8,11 +8,9 @@
     <p class="hero-description m-0 text-lg mx-auto max-w-md">Explore the specialized abilities of world-class digital artists.</p>
 </div>
 
-<!-- Art Feed -->
 <div class="post-feed">
     @foreach($posts as $post)
     <div class="post-card">
-        <!-- Header -->
         <div class="post-header">
             <div class="post-artist-info">
                 <a href="/artist/{{ $post->user_id }}">
@@ -26,12 +24,9 @@
             <a href="/artist/{{ $post->user_id }}" class="btn btn-secondary py-1 px-2 text-xs">Profile</a>
         </div>
 
-        <!-- Image -->
         <div class="post-image-container">
             <img src="{{ $post->image_path }}" class="post-image" alt="{{ $post->title }}">
         </div>
-
-        <!-- Footer -->
         <div class="post-footer">
             <div class="post-actions">
                 @if($post->estimated_price)

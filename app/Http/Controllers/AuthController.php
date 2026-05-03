@@ -17,8 +17,16 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        $this->authService->register($request->all());
-        return redirect('/login');
+        $user = $this->authService->register($request->all());
+        \Illuminate\Support\Facades\Auth::login($user);
+
+        if ($user->role === 'artist') {
+            return redirect('/dashboard/artist');
+        }
+        if ($user->role === 'admin') {
+            return redirect('/admin/dashboard');
+        }
+        return redirect('/dashboard');
     }
 
     public function login(Request $request)

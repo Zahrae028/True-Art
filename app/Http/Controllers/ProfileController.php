@@ -17,7 +17,7 @@ class ProfileController extends Controller
             $profile->bio = $request->bio;
         }
 
-        if ($request->has('specialty')) {
+        if ($request->exists('specialty')) {
             $profile->specialty = $request->specialty;
         }
 

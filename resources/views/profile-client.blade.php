@@ -19,6 +19,11 @@
                 <label for="name">Full Name</label>
                 <input type="text" id="name" name="name" value="{{ $user->name }}" required>
             </div>
+
+            <div class="form-group">
+                <label for="specialty">Art Specialty</label>
+                <input type="text" id="specialty" name="specialty" value="{{ $user->profile->specialty ?? '' }}" placeholder="e.g., 3D Environmental Artist">
+            </div>
             
             <div class="form-group">
                 <label for="bio">Personal Bio</label>

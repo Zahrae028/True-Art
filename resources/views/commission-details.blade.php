@@ -73,13 +73,28 @@
                     @endif
 
                     @if(auth()->id() === $commission->client_id && $commission->status === 'accepted')
-                        <form action="/commission/{{ $commission->id }}/pay" method="POST" class="mb-2">
+                        <form action="/commission/{{ $commission->id }}/pay-deposit" method="POST" class="mb-2">
                             @csrf
-                            <button type="submit" class="btn btn-primary w-full bg-blue-500 border-none">Pay for Commission</button>
+                            <button type="submit" class="btn btn-primary w-full bg-blue-500 border-none">Pay Deposit (20%)</button>
                         </form>
                     @endif
 
-                    @if(auth()->id() === $commission->artist_id && $commission->status === 'accepted')
+                    @if(auth()->id() === $commission->client_id && $commission->status === 'deposit_paid')
+                        <div class="d-flex gap-1 flex-column mb-2">
+                            <form action="/commission/{{ $commission->id }}/pay-final" method="POST" class="mb-0">
+                                @csrf
+                                <button type="submit" class="btn btn-primary w-full bg-blue-500 border-none">Pay Final Balance</button>
+                            </form>
+                            @if($commission->isRefundable())
+                                <form action="/commission/{{ $commission->id }}/refund-deposit" method="POST" class="mb-0" onsubmit="return confirm('Are you sure you want to request a refund and cancel this commission?');">
+                                    @csrf
+                                    <button type="submit" class="btn btn-secondary w-full" style="border-color: #ef4444; color: #ef4444; background: rgba(239, 68, 68, 0.05);">Request Refund (48h Window)</button>
+                                </form>
+                            @endif
+                        </div>
+                    @endif
+
+                    @if(auth()->id() === $commission->artist_id && $commission->status === 'paid')
                         <form action="/commission/{{ $commission->id }}/complete" method="POST" class="mb-2">
                             @csrf
                             <button type="submit" class="btn btn-primary w-full bg-purple-500 border-none">Mark as Complete</button>

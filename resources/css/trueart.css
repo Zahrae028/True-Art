@@ -1569,3 +1569,9 @@ input:focus, textarea:focus, select:focus {
     color: #f87171;
 }
 
+
+/* Admin Users Table Avatar Fix */
+.dashboard-section table tbody tr td img.w-40.h-40 {
+    width: 40px !important;
+    height: 40px !important;
+}

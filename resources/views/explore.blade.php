@@ -16,7 +16,7 @@
         <div class="post-header">
             <div class="post-artist-info">
                 <a href="/artist/{{ $post->user_id }}">
-                    <img src="{{ $post->artist->profile->avatar ?? 'https://i.pravatar.cc/150?u=' . $post->artist->email }}" class="post-avatar" alt="">
+                    <img src="{{ $post->artist->profile?->avatar }}" class="post-avatar" alt="">
                 </a>
                 <div>
                     <a href="/artist/{{ $post->user_id }}" class="post-artist-name">{{ $post->artist->name }}</a>

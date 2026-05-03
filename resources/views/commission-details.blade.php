@@ -179,7 +179,7 @@
                         <div class="bubble-container {{ $message->sender_id === auth()->id() ? 'sent' : 'received' }}">
                             <div class="chat-row {{ $message->sender_id === auth()->id() ? 'flex-row-reverse' : '' }}">
                                 @if($message->sender_id !== $lastSenderId)
-                                    <img src="{{ $message->sender->profile->avatar ?? 'https://i.pravatar.cc/150?u=' . $message->sender->email }}" 
+                                    <img src="{{ $message->sender->profile?->avatar }}" 
                                          class="rounded-full overflow-hidden object-cover" style="width: 24px; height: 24px; margin-top: auto;" alt="">
                                 @else
                                     <div style="width: 24px;"></div>

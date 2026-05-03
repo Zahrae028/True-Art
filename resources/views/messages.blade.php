@@ -19,7 +19,7 @@
                         $isActive = isset($activeCommission) && $activeCommission->id === $commission->id;
                     @endphp
                     <a href="/messages?id={{ $commission->id }}" class="conversation-item {{ $isActive ? 'active' : '' }}">
-                        <img src="{{ $otherUser->profile->avatar ?? 'https://i.pravatar.cc/150?u=' . $otherUser->email }}" 
+                        <img src="{{ $otherUser->profile?->avatar }}" 
                              class="conversation-avatar" alt="">
                         <div class="conversation-info">
                             <div class="conversation-name">{{ $otherUser->name }}</div>
@@ -50,7 +50,7 @@
                     <a href="/messages" class="text-dim me-2 d-none d-block-tablet">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-top: 4px;"><polyline points="15 18 9 12 15 6"/></svg>
                     </a>
-                    <img src="{{ $activeOtherUser->profile->avatar ?? 'https://i.pravatar.cc/150?u=' . $activeOtherUser->email }}" 
+                    <img src="{{ $activeOtherUser->profile?->avatar }}" 
                          class="rounded-full w-40 h-40 object-cover border-primary" alt="">
                     <div>
                         <div class="fw-bold text-main ls-tight">{{ $activeOtherUser->name }}</div>

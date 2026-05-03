@@ -4,7 +4,7 @@
 <div class="dashboard-section p-0 overflow-hidden mb-0 rounded-bottom-none">
     <div class="profile-banner"></div>
     <div class="d-flex gap-4 items-end mb-4 px-4 mt-neg-lg flex-col-mobile items-center-mobile gap-mobile-2">
-        <img src="{{ $artist->profile->avatar ?? 'https://i.pravatar.cc/150?u=' . $artist->email }}" 
+        <img src="{{ $artist->profile?->avatar }}" 
              class="profile-avatar-lg" 
              alt="{{ $artist->name }}">
         <div class="pb-1 flex-1 text-left-mobile items-center-mobile d-flex flex-column items-start">

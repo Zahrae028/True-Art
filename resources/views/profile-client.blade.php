@@ -8,7 +8,7 @@
             @csrf
             
             <div class="d-flex flex-column items-center mb-4 text-center">
-                <img id="avatar-preview" src="{{ $user->profile->avatar ?? 'https://i.pravatar.cc/150?u=' . $user->email }}" 
+                <img id="avatar-preview" src="{{ $user->profile?->avatar }}" 
                      class="rounded-full border-primary mb-2 shadow-primary object-cover avatar-edit-sm" 
                      alt="{{ $user->name }}">
                 <label for="avatar" class="cursor-pointer text-primary font-heading fw-bold py-1 px-2 border-tiny rounded-sm bg-primary-tiny hover-bg-tiny transition-all">Change Picture</label>

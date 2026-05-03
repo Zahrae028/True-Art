@@ -26,7 +26,7 @@
             <tr class="transition-all border-tiny border-none hover-bg-tiny" style="border-left: none; border-right: none; border-top: none;">
                 <td class="p-3">
                     <div class="d-flex items-center gap-2">
-                        <img src="{{ $user->profile->avatar ?? 'https://i.pravatar.cc/150?u=' . $user->email }}" class="rounded-full w-40 h-40 object-cover {{ $user->is_banned ? 'border-error' : '' }}" style="border-width: 2px; border-style: solid;" alt="">
+                        <img src="{{ $user->profile?->avatar }}" class="rounded-full w-40 h-40 object-cover {{ $user->is_banned ? 'border-error' : '' }}" style="border-width: 2px; border-style: solid;" alt="">
                         <div>
                             <div class="fw-semibold {{ $user->is_banned ? 'text-error' : 'text-main' }}">
                                 {{ $user->name }}

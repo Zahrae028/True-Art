@@ -25,7 +25,7 @@
                 <div class="d-flex justify-between items-start mb-4">
                     <div class="drawer-user-info flex-1">
                         @if(Auth::check())
-                            <img src="{{ Auth::user()->profile->avatar ?? 'https://i.pravatar.cc/150?u=' . Auth::user()->email }}" class="drawer-avatar mb-3">
+                            <img src="{{ Auth::user()->profile?->avatar }}" class="drawer-avatar mb-3">
                             <div class="fw-black text-3xl text-main ls-tight mb-1">{{ Auth::user()->name }}</div>
                             <div class="text-sm text-primary text-uppercase fw-bold ls-wider">Mastery {{ Auth::user()->role }}</div>
                         @else

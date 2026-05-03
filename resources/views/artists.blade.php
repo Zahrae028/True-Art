@@ -24,7 +24,7 @@
             <!-- card content stays same -->
             <div class="artist-card-banner"></div>
             <div class="artist-card-body">
-                <img src="{{ $artist->profile->avatar ?? 'https://i.pravatar.cc/150?u=' . $artist->email }}" class="artist-master-avatar" alt="">
+                <img src="{{ $artist->profile?->avatar }}" class="artist-master-avatar" alt="">
                 
                 <div class="artist-badge">{{ $artist->profile->specialty ?? 'Digital Creator' }}</div>
                 
@@ -34,24 +34,7 @@
                     {{ $artist->profile->bio ?? 'A talented visionary dedicated to pushing the boundaries of digital expression.' }}
                 </p>
 
-                <div class="artist-stats d-flex justify-between py-1 mt-auto border-tiny border-none" style="border-left: none; border-right: none; border-bottom: none;">
-                    <div class="stat-item text-center">
-                        <div class="stat-value fw-bold text-main d-block">{{ $artist->profile->projects_completed ?? 0 }}</div>
-                        <div class="stat-label d-block text-xs text-dim text-uppercase">Projects</div>
-                    </div>
-                    <div class="bg-tiny" style="width: 1px;"></div>
-                    <div class="stat-item text-center">
-                        <div class="stat-value fw-bold text-main d-block">{{ number_format($artist->profile->rating ?? 0.0, 1) }}</div>
-                        <div class="stat-label d-block text-xs text-dim text-uppercase">Rating</div>
-                    </div>
-                    <div class="bg-tiny" style="width: 1px;"></div>
-                    <div class="stat-item text-center">
-                        <div class="stat-value fw-bold text-main d-block">{{ $artist->profile->response_rate ?? 100 }}%</div>
-                        <div class="stat-label d-block text-xs text-dim text-uppercase">Response</div>
-                    </div>
-                </div>
-
-                <div class="text-primary fw-bold text-sm text-uppercase ls-wide mt-2">
+                <div class="text-primary fw-bold text-sm text-uppercase ls-wide mt-auto">
                     View Master Profile &rarr;
                 </div>
             </div>

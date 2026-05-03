@@ -54,7 +54,7 @@
         <div class="d-flex flex-column gap-2">
             @foreach($recentUsers as $user)
             <div class="d-flex items-center gap-2 pb-1 border-tiny border-none" style="border-left: none; border-right: none; border-top: none;">
-                <img src="{{ $user->profile->avatar ?? 'https://i.pravatar.cc/150?u=' . $user->email }}" class="rounded-full w-32 h-32" alt="">
+                <img src="{{ $user->profile?->avatar }}" class="rounded-full w-32 h-32" alt="">
                 <div class="flex-1">
                     <div class="fw-semibold text-sm text-main">{{ $user->name }}</div>
                     <div class="text-xs text-dim">{{ $user->email }}</div>

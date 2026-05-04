@@ -17,6 +17,13 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8',
+            'role' => 'required|in:client,artist',
+        ]);
+
         $user = $this->authService->register($request->all());
         \Illuminate\Support\Facades\Auth::login($user);
 

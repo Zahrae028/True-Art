@@ -3,6 +3,17 @@
 @section('content')
 <div class="dashboard-section mx-auto mt-lg max-w-sm">
     <div class="dashboard-title text-center">Register</div>
+    
+    @if ($errors->any())
+        <div class="alert alert-error mb-4">
+            <ul class="m-0 pl-4">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <form action="/register" method="POST" class="commission-form p-0 border-none b-transparent">
         @csrf
         <div class="form-group">
